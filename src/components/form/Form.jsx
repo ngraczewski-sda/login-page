@@ -66,6 +66,9 @@ export const Form = () => {
         username,
         password,
       },
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
   };
 
