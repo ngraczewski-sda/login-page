@@ -53,14 +53,14 @@ export const Form = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (errors.password || errors.username) {
       return;
     }
 
-    await fetch("/api/login", {
+    fetch("/api/login", {
       method: "POST",
       body: {
         username,
