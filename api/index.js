@@ -12,8 +12,8 @@ app.get("/api", (req, res) => {
 });
 
 const users = [
-  { username: "user1", password: "abcd1234" },
-  { username: "user2", password: "1234abcd" },
+  { username: "user1", password: "Abcd1234" },
+  { username: "user2", password: "1234Abcd" },
 ];
 app.post("/api/login", (req, res) => {
   const { username, password } = req.body;
