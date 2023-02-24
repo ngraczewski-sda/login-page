@@ -62,10 +62,10 @@ export const Form = () => {
 
     fetch("/api/login", {
       method: "POST",
-      body: {
+      body: JSON.stringify({
         username,
         password,
-      },
+      }),
       headers: {
         "Content-Type": "application/json",
       },
