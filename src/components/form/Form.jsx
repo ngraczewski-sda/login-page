@@ -53,7 +53,9 @@ export const Form = () => {
     });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     if (errors.password || errors.username) {
       return;
     }

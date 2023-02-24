@@ -16,6 +16,7 @@ app.get("/api/login", (req, res) => {
   }
 
   res.status(401);
+  res.end("Login failed");
 });
 
 module.exports = app;
