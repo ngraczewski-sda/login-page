@@ -18,6 +18,8 @@ const users = [
 app.post("/api/login", (req, res) => {
   const { username, password } = req.body;
 
+  console.log(req.body);
+
   const validCredentials = users.some((user) => {
     return user.password === password && user.username === username;
   });
