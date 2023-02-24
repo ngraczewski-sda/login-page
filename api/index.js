@@ -1,15 +1,14 @@
 const app = require("express")();
-const { v4 } = require("uuid");
+var cors = require("cors");
 const bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({ extended: true }));
-
-app.get("/api", (req, res) => {
-  const path = `/api/item/${v4()}`;
-  res.setHeader("Content-Type", "text/html");
-  res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
-  res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
-});
+app.use(bodyParser.json());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 const users = [
   { username: "user1", password: "Abcd1234" },
@@ -26,6 +25,7 @@ app.post("/api/login", (req, res) => {
 
   if (validCredentials) {
     res.end("Login successful");
+    return;
   }
 
   res.status(401);
