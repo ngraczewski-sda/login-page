@@ -12,7 +12,7 @@ const users = [
   { username: "user1", password: "abcd1234" },
   { username: "user2", password: "1234abcd" },
 ];
-app.get("/api/login", (req, res) => {
+app.post("/api/login", (req, res) => {
   const { username, password } = req.body;
 
   const validCredentials = users.some((user) => {
