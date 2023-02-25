@@ -24,6 +24,13 @@ app.post("/api/register", (req, res) => {
     return;
   }
 
+  const passwordInUse = users.find((user) => user.password === password);
+  if (passwordInUse) {
+    res.status(409);
+    res.end(`Password already in use by ${passwordInUse.username}`);
+    return;
+  }
+
   const usernameInUse = users.some((user) => user.username === username);
   if (usernameInUse) {
     res.status(409);
