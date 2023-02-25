@@ -89,7 +89,7 @@ export const LoginView = () => {
         onChange={handleChange}
         error={errors.password}
       />
-      <Button>Log in</Button>
+      <Button disabled={errors.password || errors.username}>Log in</Button>
     </form>
   );
 };
