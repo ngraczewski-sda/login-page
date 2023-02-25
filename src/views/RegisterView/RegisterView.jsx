@@ -15,9 +15,21 @@ const validatePassword = (password) => {
   if (!password) {
     return "Password is required";
   }
+
+  if (password.length < 8) {
+    return "Password must have at least 8 signs";
+  }
+
+  if (!/.*[A-Z].*/.test(password)) {
+    return "Password must have at least one uppercase letter";
+  }
+
+  if (!/.*[0-9].*/.test(password)) {
+    return "Password must have at least one number";
+  }
 };
 
-export const LoginView = () => {
+export const RegisterView = () => {
   const [{ username, password }, setLoginData] = useState({
     username: "",
     password: "",
@@ -46,7 +58,7 @@ export const LoginView = () => {
     });
   };
 
-  const { login, error } = useAuthContext();
+  const { register, error } = useAuthContext();
   const history = useHistory();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -55,14 +67,14 @@ export const LoginView = () => {
       return;
     }
 
-    login({ username, password }).then(() => {
-      history.push("/");
+    register({ username, password }).then(() => {
+      history.push("/login");
     });
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1>Login</h1>
+      <h1>Register</h1>
       {error && <Error>{error}</Error>}
       <Input
         label="Username"
@@ -86,7 +98,7 @@ export const LoginView = () => {
         error={errors.password}
         touched={touched.password}
       />
-      <Button disabled={errors.password || errors.username}>Log in</Button>
+      <Button disabled={errors.password || errors.username}>Register</Button>
     </form>
   );
 };

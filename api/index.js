@@ -14,6 +14,38 @@ const users = [
   { username: "user1", password: "Abcd1234" },
   { username: "user2", password: "1234Abcd" },
 ];
+
+app.post("/api/register", (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username) {
+    res.status(400);
+    res.end("Empty username");
+    return;
+  }
+
+  const usernameInUse = users.some((user) => user.username === username);
+  if (usernameInUse) {
+    res.status(409);
+    res.end("Username in use");
+    return;
+  }
+
+  if (!password) {
+    res.status(400);
+    res.end("Empty password");
+    return;
+  }
+
+  users.push({
+    username,
+    password,
+  });
+
+  res.status(201);
+  res.end("User created");
+});
+
 app.post("/api/login", (req, res) => {
   const { username, password } = req.body;
 

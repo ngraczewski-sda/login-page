@@ -1,4 +1,4 @@
-import { postLogin } from "../api/auth";
+import { postLogin, postRegister } from "../api/auth";
 
 const {
   createContext,
@@ -27,19 +27,43 @@ const AuthContextProvider = ({ children }) => {
       }
 
       if (res.status === 401) {
-        setError("Invalid credentials");
+        throw "Invalid credentials";
+      }
+
+      throw "Unknown error";
+    } catch (e) {
+      setError(e);
+      throw e;
+    }
+  }, []);
+
+  const register = useCallback(async (userData) => {
+    try {
+      setError();
+
+      const res = await postRegister(userData);
+      if (res.status === 201) {
+        setLoggedIn(true);
         return;
       }
 
-      setError("Unknown error");
+      console.log(res.status);
+
+      if ([401, 409].includes(res.status)) {
+        throw await res.text();
+      }
+
+      throw "Unknown error";
     } catch (e) {
-      setError("Unknown error");
+      setError(e);
+      throw e;
     }
   }, []);
 
   const value = useMemo(
     () => ({
       login,
+      register,
       loggedIn,
       error,
     }),
