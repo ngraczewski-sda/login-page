@@ -1,8 +1,7 @@
 import { useState } from "react";
-
-const BASE_URL = process.env.REACT_APP_BASE_URL ?? "";
-
-console.log({ BASE_URL });
+import { Button } from "../../components/button/Button";
+import { Input } from "../../components/Input/Input";
+import { useAuthContext } from "../../context/AuthContext";
 
 const validateUsername = (username) => {
   if (!username) {
@@ -28,7 +27,7 @@ const validatePassword = (password) => {
   }
 };
 
-export const Form = () => {
+export const LoginView = () => {
   const [{ username, password }, setLoginData] = useState({
     username: "",
     password: "",
@@ -57,6 +56,7 @@ export const Form = () => {
     });
   };
 
+  const { login } = useAuthContext();
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -64,45 +64,32 @@ export const Form = () => {
       return;
     }
 
-    fetch(`${BASE_URL}/api/login`, {
-      method: "POST",
-      body: JSON.stringify({
-        username,
-        password,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    login({ username, password });
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          required
-          name="username"
-          id="username"
-          value={username}
-          onChange={handleChange}
-        />
-        {!!errors.username && <div>{errors.username}</div>}
-      </div>
+      <Input
+        label="Username"
+        required
+        name="username"
+        id="username"
+        value={username}
+        onChange={handleChange}
+        error={errors.username}
+      />
 
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          required
-          name="password"
-          id="password"
-          type="password"
-          value={password}
-          onChange={handleChange}
-        />
-        {!!errors.password && <div>{errors.password}</div>}
-        <button>Log in</button>
-      </div>
+      <Input
+        label="Password"
+        required
+        name="password"
+        id="password"
+        type="password"
+        value={password}
+        onChange={handleChange}
+        error={errors.password}
+      />
+      <Button>Log in</Button>
     </form>
   );
 };
