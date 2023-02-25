@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "../../components/button/Button";
+import { Error } from "../../components/error/Error";
 import { Input } from "../../components/Input/Input";
 import { useAuthContext } from "../../context/AuthContext";
 
@@ -56,7 +57,7 @@ export const LoginView = () => {
     });
   };
 
-  const { login } = useAuthContext();
+  const { login, error } = useAuthContext();
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -69,6 +70,7 @@ export const LoginView = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      {error && <Error>{error}</Error>}
       <Input
         label="Username"
         required
@@ -77,6 +79,7 @@ export const LoginView = () => {
         value={username}
         onChange={handleChange}
         error={errors.username}
+        touched={touched.username}
       />
 
       <Input
@@ -88,6 +91,7 @@ export const LoginView = () => {
         value={password}
         onChange={handleChange}
         error={errors.password}
+        touched={touched.password}
       />
       <Button disabled={errors.password || errors.username}>Log in</Button>
     </form>

@@ -14,13 +14,26 @@ const useAuthContext = () => useContext(AuthContext);
 
 const AuthContextProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [error, setError] = useState();
 
   const login = useCallback(async (userData) => {
     try {
-      await postLogin(userData);
-      setLoggedIn(true);
+      setError();
+
+      const res = await postLogin(userData);
+      if (res.status === 200) {
+        setLoggedIn(true);
+        return;
+      }
+
+      if (res.status === 401) {
+        setError("Invalid credentials");
+        return;
+      }
+
+      setError("Unknown error");
     } catch (e) {
-      setLoggedIn(false);
+      setError("Unknown error");
     }
   }, []);
 
@@ -28,8 +41,9 @@ const AuthContextProvider = ({ children }) => {
     () => ({
       login,
       loggedIn,
+      error,
     }),
-    [loggedIn, login]
+    [error, loggedIn, login]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -12,8 +12,3 @@
 .input {
   padding: var(--sm-padding) var(--md-padding);
 }
-
-.error {
-  color: red;
-  padding-top: var(--xs-padding);
-}
