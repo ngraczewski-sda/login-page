@@ -56,7 +56,7 @@ export const LoginView = () => {
     }
 
     login({ username, password }).then(() => {
-      history.push("/");
+      history.push("/home");
     });
   };
 

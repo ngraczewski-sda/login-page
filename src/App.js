@@ -17,7 +17,7 @@ function App() {
           <RegisterView />
         </Route>
         {loggedIn ? (
-          <Route path="/">
+          <Route path="/home">
             <div>Successfully logged in</div>
           </Route>
         ) : (
